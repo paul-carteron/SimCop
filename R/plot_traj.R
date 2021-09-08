@@ -14,6 +14,7 @@
 #' @importFrom ggplot2 aes annotation_logticks coord_cartesian element_text geom_path ggplot labs scale_x_continuous scale_y_continuous theme theme_bw unit
 #' @importFrom purrr map_df
 #' @importFrom rlang is_true
+#' @importFrom magrittr "%>%"
 #'
 #' @examples
 #' \dontrun{plot_traj()}
@@ -39,11 +40,7 @@ plot_traj = function(density_init = 1000,
    # CALCUL DES TRAJECTOIRES POUR CHAQUE DENSITE
    traj = purrr::map_df(.x = density_init,
                         .f = ~ dplyr::tibble(cg = cg_range) %>%
-                           dplyr::mutate(nha = calculate_traj(cg,.x,
-                                                              coeff_traj["a"],
-                                                              coeff_traj["b"],
-                                                              coeff_traj["a0"],
-                                                              coeff_traj["b0"]),
+                           dplyr::mutate(nha = calculate_traj(cg,.x,coeff_traj),
                                          density_init = as.factor(.x)))
 
    # CREATION DU GRAPHIQUE
