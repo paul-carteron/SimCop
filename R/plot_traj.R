@@ -39,11 +39,11 @@ plotTraj = function(density_init = 1000,
    # CALCUL DES TRAJECTOIRES POUR CHAQUE DENSITE
    traj = purrr::map_df(.x = density_init,
                         .f = ~ dplyr::tibble(cg = cg_range) %>%
-                           dplyr::mutate(nha = trajLGNO(cg,.x,
-                                                        coeff_traj["a"],
-                                                        coeff_traj["b"],
-                                                        coeff_traj["a0"],
-                                                        coeff_traj["b0"]),
+                           dplyr::mutate(nha = calculate_traj(cg,.x,
+                                                              coeff_traj["a"],
+                                                              coeff_traj["b"],
+                                                              coeff_traj["a0"],
+                                                              coeff_traj["b0"]),
                                          density_init = as.factor(.x)))
 
    # CREATION DU GRAPHIQUE
@@ -66,7 +66,7 @@ plotTraj = function(density_init = 1000,
 
    if (is_true(base_theme)){
       res = res +
-         labs(title = "Diagramme de gestion de la densité",
+         labs(title = "Diagramme de gestion de la densite",
               x = "Cg [cm]",
               y = "Nha [tiges/ha]",
               color = "Density [tiges/ha] :",
