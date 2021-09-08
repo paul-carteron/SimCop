@@ -18,7 +18,7 @@
 #' @examples
 #' \dontrun{plot_traj()}
 #'
-plotTraj = function(density_init = 1000,
+plot_traj = function(density_init = 1000,
                     coeff_traj = c(a = 13.532,
                                    b = -1.461,
                                    a0 = 14.21,
