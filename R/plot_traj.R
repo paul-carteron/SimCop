@@ -67,7 +67,7 @@ plot_traj = function(density_init = 1000,
               x = "Cg [cm]",
               y = "Nha [tiges/ha]",
               color = "Density [tiges/ha] :",
-              subtitle = "Donn?es issues de SimCop")+
+              subtitle = "Donnees issues de SimCop")+
          theme_bw() +
          theme(axis.text = element_text(size = 12),
                axis.title = element_text(size = 12),
