@@ -4,7 +4,7 @@
 #' @param variable variable on which the growth will be calculated
 #' @param growth_type should be "annual" or "average" which mean from the start of the stand
 #'
-#' @importFrom dplyr group_by mutate filter
+#' @importFrom dplyr group_by mutate filter lag
 #' @importFrom rlang ensym ":="
 #'
 #' @return add a column to data.frame with the calculated growth
@@ -12,7 +12,7 @@
 #'
 calculate_growth = function(stand_data, variable, growth_type){
 
-   repetitions <- fertility <- density <- stand_age <- lag <-  NULL
+   repetitions <- fertility <- density <- stand_age <- NULL
 
    variable = ensym(variable)
    growth_type = ensym(growth_type)
