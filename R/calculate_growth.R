@@ -42,4 +42,3 @@ calculate_growth = function(stand_data, variable, growth_type){
 
    return(data_acc)
 }
-
