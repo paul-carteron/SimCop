@@ -4,7 +4,7 @@
 #' @param coeff_traj Coefficient a, b, a0, and b0 of the trajectory (cf : Ningre et al "Trajectoires d’autoéclaircie du Douglas en France)
 #' @param scale A vector compose of xmin, xmax, ymin and ymax
 #' @param ... Param to give to th ggplot (color, linetype, alpha, ...)
-#' @param base_theme If TRUE, allows to apply a theme already created for the graph
+#' @param remove_theme If TRUE, already created theme for the graph is remove
 #'
 #' @return A ggplot object
 #' @export
@@ -13,23 +13,22 @@
 #' @importFrom dplyr mutate
 #' @importFrom ggplot2 aes annotation_logticks coord_cartesian element_text geom_path ggplot labs scale_x_continuous scale_y_continuous theme theme_bw unit
 #' @importFrom purrr map_df
-#' @importFrom rlang is_true
 #' @importFrom magrittr "%>%"
 #'
 #' @examples
 #' \dontrun{plot_traj()}
 #'
-plot_traj = function(density_init = 1000,
-                    coeff_traj = c(a = 13.532,
-                                   b = -1.461,
-                                   a0 = 14.21,
-                                   b0 = -1.79),
-                    scale = c(xmin = 15,
-                              xmax = 500,
-                              ymin = 50,
-                              ymax = 5000),
-                    ...,
-                    base_theme = TRUE){
+plot_traj = function(density_init = c(100,200,500,1000,2000,5000),
+                     coeff_traj = c(a = 13.532,
+                                    b = -1.461,
+                                    a0 = 14.21,
+                                    b0 = -1.79),
+                     scale = c(xmin = 15,
+                               xmax = 500,
+                               ymin = 50,
+                               ymax = 5000),
+                     ...,
+                     remove_theme = FALSE){
 
    # BINDING VARIABLES
    cg <- nha <- NULL
@@ -61,7 +60,7 @@ plot_traj = function(density_init = 1000,
                          minor_breaks = minor_breaks)+
       annotation_logticks()
 
-   if (is_true(base_theme)){
+   if (remove_theme == FALSE){
       res = res +
          labs(title = "Diagramme de gestion de la densite",
               x = "Cg [cm]",

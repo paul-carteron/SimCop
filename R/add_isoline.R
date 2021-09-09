@@ -44,16 +44,15 @@ add_isolines = function(stand_data,
                          stand_data[variable] > iso_value - tolerance, ]
 
          if (nrow(reduce_stand_data) == 0) {
-            return(cat(
-               paste(
+            stop(paste(
                   "Pas de donnees simulees pour",
                   variable,
                   "=",
                   iso_value,
-                  "?",
+                  "+/-",
                   round(tolerance, 2)
                )
-            ))
+            )
          }
 
          iso_value_extraction = reduce_stand_data %>%

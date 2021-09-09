@@ -5,11 +5,11 @@
 \title{plot_traj}
 \usage{
 plot_traj(
-  density_init = 1000,
+  density_init = c(100, 200, 500, 1000, 2000, 5000),
   coeff_traj = c(a = 13.532, b = -1.461, a0 = 14.21, b0 = -1.79),
   scale = c(xmin = 15, xmax = 500, ymin = 50, ymax = 5000),
   ...,
-  base_theme = TRUE
+  remove_theme = FALSE
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ plot_traj(
 
 \item{...}{Param to give to th ggplot (color, linetype, alpha, ...)}
 
-\item{base_theme}{If TRUE, allows to apply a theme already created for the graph}
+\item{remove_theme}{If TRUE, already created theme for the graph is remove}
 }
 \value{
 A ggplot object
