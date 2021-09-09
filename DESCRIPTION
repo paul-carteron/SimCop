@@ -19,4 +19,5 @@ Imports:
     magrittr,
     purrr,
     rlang,
-    tidyr
+    tidyr,
+    vroom
