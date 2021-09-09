@@ -1,7 +1,6 @@
 #' import_stand_data
 #'
 #' @param filepath filepath of the output folder from SimCop. You need at least "stand_data.csv" and "parameter_scenarii.csv"
-#' @param after_mortality_only if TRUE, the result only keep values after mortality
 #'
 #' @return data.frame of stand informations
 #' @export
@@ -10,7 +9,7 @@
 #' @importFrom dplyr group_by mutate ungroup left_join rename filter
 #' @importFrom purrr map_df
 #'
-import_stand_data = function(filepath, after_mortality_only = TRUE){
+import_stand_data = function(filepath){
 
    Nha <- Vha <- Vha_dead <- douglas.hDom50 <- horStemSpacingM <- parameters_id <- repetitions <- NULL
    fertility <- density <- stand_age <- NULL
@@ -36,14 +35,5 @@ import_stand_data = function(filepath, after_mortality_only = TRUE){
       map_df(~ base::as.double(.)) %>%
       rename(fertility = douglas.hDom50)
 
-   if (after_mortality_only == TRUE){
-      stand_data_2 = stand_data %>%
-         group_by(repetitions,fertility,density) %>%
-         filter(!duplicated(stand_age, fromLast = TRUE))
-   }
-
    return(stand_data)
 }
-
-
-filepath = "D:/Professionnel/INRA Apprentissage/Projet/2021-04-27 - SDMD/input/avec_contrainte_2"

@@ -4,12 +4,10 @@
 \alias{import_stand_data}
 \title{import_stand_data}
 \usage{
-import_stand_data(filepath, after_mortality_only = TRUE)
+import_stand_data(filepath)
 }
 \arguments{
 \item{filepath}{filepath of the output folder from SimCop. You need at least "stand_data.csv" and "parameter_scenarii.csv"}
-
-\item{after_mortality_only}{if TRUE, the result only keep values after mortality}
 }
 \value{
 data.frame of stand informations
