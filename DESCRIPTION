@@ -1,9 +1,9 @@
 Package: SimCop
 Type: Package
-Title: What the Package Does (Title Case)
+Title: SimCop
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Author: CARTERON Paul
+Maintainer: CARTERON Paul <carteronpaul@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: GPL-2 
