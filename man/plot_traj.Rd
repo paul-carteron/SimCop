@@ -15,7 +15,7 @@ plot_traj(
 \arguments{
 \item{density_init}{A vector of initial densities (numeric)}
 
-\item{coeff_traj}{Coefficient a, b, a0, and b0 of the trajectory (cf : Ningre et al "Trajectoires d’autoéclaircie du Douglas en France)}
+\item{coeff_traj}{Coefficient a, b, a0, and b0 of the mortality trajectory (cf : Ningre et al "Trajectoires d auto-eclaircie du Douglas en France)}
 
 \item{scale}{A vector compose of xmin, xmax, ymin and ymax}
 

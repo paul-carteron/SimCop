@@ -1,6 +1,6 @@
 #' add_isolines
 #'
-#' @param stand_data data.frame correponding to the "stand_data.csv" output of SimCop
+#' @param stand_data data.frame from the use of "import_stand_data" function
 #' @param variable one variable from the stand_data (ex : Hdom, Gha, ...)
 #' @param iso_values a vector of isoline values (ex : c(10,20,30,40,50))
 #' @param label_position choose the position of the label with "top", "bottom", "none"

@@ -2,7 +2,7 @@
 #'
 #' @param cg_range Range of calculation for the trajectory
 #' @param density_init A vector of initial densities (numeric)
-#' @param coeff_traj Coefficient a, b, a0, and b0 of the trajectory (cf : Ningre et al "Trajectoires d’autoéclaircie du Douglas en France)
+#' @param coeff_traj Coefficient a, b, a0, and b0 of the mortality trajectory (cf : Ningre et al "Trajectoires d auto-eclaircie du Douglas en France)
 #'
 #' @return Data.frame with trajectory calculated for the cg_range
 #' @export

@@ -1,6 +1,6 @@
 #' calculate_growth
 #'
-#' @param stand_data data.frame from the use "import_stand_data" function
+#' @param stand_data data.frame from the use of "import_stand_data" function
 #' @param variable variable on which the growth will be calculated
 #' @param growth_type should be "annual" or "average" which mean from the start of the stand
 #'

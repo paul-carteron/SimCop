@@ -15,7 +15,7 @@ add_isolines(
 )
 }
 \arguments{
-\item{stand_data}{data.frame correponding to the "stand_data.csv" output of SimCop}
+\item{stand_data}{data.frame from the use of "import_stand_data" function}
 
 \item{variable}{one variable from the stand_data (ex : Hdom, Gha, ...)}
 

@@ -1,7 +1,7 @@
 #' plot_traj
 #'
 #' @param density_init A vector of initial densities (numeric)
-#' @param coeff_traj Coefficient a, b, a0, and b0 of the trajectory (cf : Ningre et al "Trajectoires d’autoéclaircie du Douglas en France)
+#' @param coeff_traj Coefficient a, b, a0, and b0 of the mortality trajectory (cf : Ningre et al "Trajectoires d auto-eclaircie du Douglas en France)
 #' @param scale A vector compose of xmin, xmax, ymin and ymax
 #' @param ... Param to give to th ggplot (color, linetype, alpha, ...)
 #' @param remove_theme If TRUE, already created theme for the graph is remove

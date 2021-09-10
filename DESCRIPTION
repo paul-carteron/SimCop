@@ -14,6 +14,7 @@ BugReports: https://github.com/paul-carteron/SimCop/issues
 RoxygenNote: 7.1.1
 Imports: 
     dplyr,
+    ggforce,
     ggplot2,
     ggrepel,
     magrittr,

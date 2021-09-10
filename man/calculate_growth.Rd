@@ -7,7 +7,7 @@
 calculate_growth(stand_data, variable, growth_type)
 }
 \arguments{
-\item{stand_data}{data.frame from the use "import_stand_data" function}
+\item{stand_data}{data.frame from the use of "import_stand_data" function}
 
 \item{variable}{variable on which the growth will be calculated}
 

@@ -15,7 +15,7 @@ calculate_traj(
 
 \item{density_init}{A vector of initial densities (numeric)}
 
-\item{coeff_traj}{Coefficient a, b, a0, and b0 of the trajectory (cf : Ningre et al "Trajectoires d’autoéclaircie du Douglas en France)}
+\item{coeff_traj}{Coefficient a, b, a0, and b0 of the mortality trajectory (cf : Ningre et al "Trajectoires d auto-eclaircie du Douglas en France)}
 }
 \value{
 Data.frame with trajectory calculated for the cg_range
