@@ -33,7 +33,8 @@ calculate_growth = function(stand_data, variable, growth_type){
 
    }else if(as.character(growth_type) == "average"){
       data_acc = stand_data %>%
-         mutate({{var_name}} := !!variable/stand_age) %>%
+         mutate({{var_name}} := !!variable/stand_age)  %>%
+         group_by(repetitions,fertility,density) %>%
          filter(!duplicated(stand_age, fromLast = FALSE))
    }
 
