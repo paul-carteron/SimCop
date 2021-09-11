@@ -40,6 +40,8 @@ add_non_simulated_zone = function(stand_data,
                              aes(x = Cg, y = value),
                              concavity = 3,
                              expand = 0,
-                             radius = 0))
+                             radius = 0,
+                             alpha = 0.6,
+                             color = "grey"))
    return(res)
 }
