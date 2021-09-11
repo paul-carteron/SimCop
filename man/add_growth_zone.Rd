@@ -9,8 +9,9 @@ add_growth_zone(
   variable = "Vha",
   growth_type = "annual",
   reduction_rate = 0.1,
+  zone_color = "purple",
   coeff_traj = c(a = 13.532, b = -1.461, a0 = 14.21, b0 = -1.79),
-  show_point = TRUE
+  show_point = FALSE
 )
 }
 \arguments{
@@ -21,6 +22,8 @@ add_growth_zone(
 \item{growth_type}{should be "annual" or "average", which mean from the start of the stand}
 
 \item{reduction_rate}{numerical value between 0 and 1 to characterize the width of the zone in relation to the maximum. For example, 0.05 corresponds to a zone of 5\% around the maximum.}
+
+\item{zone_color}{color of the zone}
 
 \item{coeff_traj}{Coefficient a, b, a0, and b0 of the mortality trajectory (cf : Ningre et al "Trajectoires d auto-eclaircie du Douglas en France)}
 
