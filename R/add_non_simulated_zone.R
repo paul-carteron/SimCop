@@ -38,7 +38,7 @@ add_non_simulated_zone = function(stand_data,
                                                  density_init = min_density)))
    res = list(geom_mark_hull(data = res,
                              aes(x = Cg, y = value),
-                             concavity = 2.5,
+                             concavity = 3,
                              expand = 0,
                              radius = 0))
    return(res)
