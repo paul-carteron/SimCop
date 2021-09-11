@@ -4,14 +4,15 @@
 #' @param variable variable on which the growth will be calculated
 #' @param growth_type should be "annual" or "average", which mean from the start of the stand
 #' @param reduction_rate numerical value between 0 and 1 to characterize the width of the zone in relation to the maximum. For example, 0.05 corresponds to a zone of 5\% around the maximum.
-#' @param coeff_traj Coefficient a, b, a0, and b0 of the mortality trajectory (cf : Ningre et al "Trajectoires d auto-eclaircie du Douglas en France)
 #' @param zone_color color of the zone
+#' @param grab_force force apply to connect point together. Defaults to 2
+#' @param coeff_traj Coefficient a, b, a0, and b0 of the mortality trajectory (cf : Ningre et al "Trajectoires d auto-eclaircie du Douglas en France)
 #' @param show_point if TRUE point used to find isolines are shown
 #'
 #' @importFrom dplyr group_by left_join mutate rename select slice_max ungroup filter all_of arrange slice n
 #' @importFrom rlang ensym
 #' @importFrom ggplot2 aes geom_point geom_line scale_linetype_manual scale_size_manual
-#' @importFrom broom augment %>%
+#' @importFrom broom augment
 #' @importFrom purrr imap_dfr map
 #' @importFrom ggforce geom_mark_hull
 #'
@@ -23,6 +24,7 @@ add_growth_zone <- function(stand_data,
                             growth_type = "annual",
                             reduction_rate = 0.10,
                             zone_color = "purple",
+                            grab_force = 2,
                             coeff_traj = c(a = 13.532, b = -1.461, a0 = 14.21, b0 = -1.79),
                             show_point = FALSE){
 
@@ -73,32 +75,36 @@ add_growth_zone <- function(stand_data,
                                 before = reduction_growth_before_max,
                                 after = reduction_growth_after_max)
    # ---- regression for each set of data ----
-   linear_models = imap_dfr(.x = all_three_growth_data,
-                            .f = ~ lm(log(Nha) ~ log(Cg), data = .x) %>%
+   zone_boundary_models = imap_dfr(.x = all_three_growth_data,
+                            .f = ~ loess(log(Nha) ~ log(Cg), data = .x) %>%
                                augment() %>%
                                mutate(name = names(all_three_growth_data[.y]))) %>%
       mutate(Nha = exp(.fitted), Cg = exp(`log(Cg)`)) %>%
       mutate(Nha_DTDM = Cg^coeff_traj["b"] * exp(coeff_traj["a"])) %>%
       filter(Nha <= Nha_DTDM)
 
-   contour_point = linear_models %>%
-      group_by(name) %>%
-      arrange(Cg)%>%
-      slice(c(1, n()))
+   extreme_max_point = zone_boundary_models %>%
+      filter(name == "max") %>%
+      arrange(Cg) %>%
+      slice(c(1,n()))
+
+   mark_hull_data = zone_boundary_models %>%
+      filter(name != "max") %>%
+      bind_rows(extreme_max_point)
 
    # ---- Preparation of ggplot object to return ----
 
-   res = list(geom_line(data = linear_models,
+   res = list(geom_line(data = zone_boundary_models,
                         aes(x = Cg, y = Nha, linetype = name, size = name)),
-                 scale_size_manual(values = c(0.5,0.5,1)),
-                 scale_linetype_manual(values = c("solid","solid","dashed")),
-                 geom_mark_hull(data = contour_point,
-                                aes(x = Cg, y = Nha),
-                                concavity = 3,
-                                expand = 0,
-                                radius = 0,
-                                fill = zone_color,
-                                color = NA))
+              scale_size_manual(values = c(0.5,0.5,1)),
+              scale_linetype_manual(values = c("solid","solid","dashed")),
+              geom_mark_hull(data = mark_hull_data,
+                             aes(x = Cg, y = Nha),
+                             concavity = grab_force,
+                             expand = 0,
+                             radius = 0,
+                             fill = zone_color,
+                             color = NA))
 
    if(show_point == TRUE){
       res = c(res,
@@ -110,5 +116,3 @@ add_growth_zone <- function(stand_data,
    }
    return(res)
 }
-
-
