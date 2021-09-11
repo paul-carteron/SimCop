@@ -87,21 +87,18 @@ add_growth_zone <- function(stand_data,
       slice(c(1, n()))
 
    # ---- Preparation of ggplot object to return ----
-   plot_traj()+
-      geom_line(data = linear_models,
-                aes(x = Cg, y = Nha, linetype = name, size = name))+
-      scale_size_manual(values = c(0.5,0.5,1))+
-      scale_linetype_manual(values = c("solid","solid","dashed"))+
-      geom_mark_hull(data = contour_point,
-                     aes(x = Cg, y = Nha),
-                     concavity = 3,
-                     expand = 0,
-                     radius = 0,
-                     fill = zone_color,
-                     color = NA)
 
    res = list(geom_line(data = linear_models,
-                        aes(x = Cg, y = Nha, group = name)))
+                        aes(x = Cg, y = Nha, linetype = name, size = name))+
+                 scale_size_manual(values = c(0.5,0.5,1))+
+                 scale_linetype_manual(values = c("solid","solid","dashed"))+
+                 geom_mark_hull(data = contour_point,
+                                aes(x = Cg, y = Nha),
+                                concavity = 3,
+                                expand = 0,
+                                radius = 0,
+                                fill = zone_color,
+                                color = NA))
 
    if(show_point == TRUE){
       res = c(res,
