@@ -42,6 +42,7 @@ add_non_simulated_zone = function(stand_data,
                              expand = 0,
                              radius = 0,
                              alpha = 0.6,
-                             color = "grey"))
+                             color = NA,
+                             fill = "grey"))
    return(res)
 }
