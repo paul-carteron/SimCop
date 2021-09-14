@@ -13,7 +13,7 @@
 import_stand_data = function(filepath, add_ecl_data = FALSE){
 
    Nha <- Vha <- Vha_dead <- douglas.hDom50 <- horStemSpacingM <- parameters_id <- repetitions <- NULL
-   fertility <- density <- stand_age <- Vha_thinned <- NULL
+   fertility <- density <- stand_age <- Vha_thinned <- name <- plotDimXM <- NULL
 
    rawdata = vroom(file = file.path(filepath,"stand_data.csv"),
                    col_select = c("parameters_id","thin_parameters_id","repetitions","rotations",
@@ -59,4 +59,5 @@ import_stand_data = function(filepath, add_ecl_data = FALSE){
 
    return(stand_data)
 }
+
 
