@@ -5,13 +5,13 @@
 \alias{stand_data_example}
 \title{stand_data_example}
 \format{
-A data frame with 58581 rows and 22 variables:
+A data frame with 19078 rows and 22 variables:
 \describe{
   \item{parameters_id}{unique id for each density-fertility couple i.e. 12*3 = 36 id}
   \item{repetitions}{number id of the actual repetitions between 0 and 15 for this dataset}
   \item{rotations}{rotation time of the forest stand}
   \item{stand_age}{age of the stand during simulation}
-  \item{Nha}{number of stem per hectare}
+  \item{Nha}{number of stem per hectare} %>%
   \item{Gha}{basal area in square meters per hectare}
   \item{Vha}{volmue of alive trees in cubic meters per hectare}
   \item{Hdom}{average height of the hightest trees in the stand (100 hightest) in meter}
@@ -35,9 +35,9 @@ A data frame with 58581 rows and 22 variables:
 stand_data_example
 }
 \description{
-A dataset containing 540 simulations from SimCop corresponding to :
-* Initial densities stem/ha : 6944, 5102, 3906, 2500, 2066, 1479, 1111, 625, 400, 278, 156, 100
+A dataset containing 180 simulations from SimCop corresponding to :
+* Initial densities stem/ha : 5102, 2500, 1111, 625, 277, 100
 * Fertility : 40, 33, 26 (dominant height at 50 year)
-* 15 repetitions are made for each pair of modalities
+* 10 repetitions are made for each pair of modalities
 }
 \keyword{datasets}
