@@ -1,4 +1,4 @@
-#' add_harvestable_diameter_zone
+#' add_diameter_zone
 #'
 #' @param diam_min numeric corresponding of the minimal harvestable diameter
 #' @param diam_max numeric corresponding of the minimal harvestable diameter
@@ -13,13 +13,13 @@
 #' @examples
 #' \dontrun{add_harvestable_diameter(diam_min = 40, diam_max = 45, fill = "orange", alpha = 0.5)}
 #'
-add_harvestable_diameter_zone = function(diam_min,
-                                         diam_max,
-                                         coeff_traj = c(a = 13.532,
+add_diameter_zone = function(diam_min,
+                             diam_max,
+                             coeff_traj = c(a = 13.532,
                                                  b = -1.461,
                                                  a0 = 14.21,
                                                  b0 = -1.79),
-                                         ...){
+                             ...){
 
    cg_min = pi * diam_min
    cg_max = pi * diam_max
