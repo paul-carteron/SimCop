@@ -33,6 +33,16 @@ add_isolines = function(stand_data,
 
    variable <- ensym(variable)
 
+   # ---- Securite ----
+
+   `%notin%` <- Negate(`%in%`)
+   if (as.character(variable) %notin% names(stand_data)){
+      stop(paste(as.character(variable),
+                 "doesn't exist in stand_data file, choose between :",
+                 paste(names(stand_data), collapse = ", ")))
+   }
+
+   # ---- extraction of data for isolines ----
    extract_iso_value <- function(stand_data, variable, iso_value) {
 
       if (as.character(variable) %in% colnames(stand_data)) {
