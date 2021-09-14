@@ -12,18 +12,18 @@
 import_stand_data = function(filepath){
 
    Nha <- Vha <- Vha_dead <- douglas.hDom50 <- horStemSpacingM <- parameters_id <- repetitions <- NULL
-   fertility <- density <- stand_age <- NULL
+   fertility <- density <- stand_age <- Vha_thinned <- NULL
 
    rawdata = vroom(file = file.path(filepath,"stand_data.csv"),
                    col_select = base::c("parameters_id","repetitions","rotations","stand_age",
                                         "Nha","Gha","Vha","Hdom","Hg","Cdom","Cg","Vha_dead","Dg","Ddom",
-                                        "Total_crown_cover_ha","Out_of_cover_crown_cover_ha"),
+                                        "Total_crown_cover_ha","Out_of_cover_crown_cover_ha",
+                                        "Nha_thinned","Vha_thinned"),
                    col_types = c(.default = "d")) %>%
       group_by(parameters_id,repetitions) %>%
-      mutate(Vha_dead = cumsum(Vha_dead)) %>%
+      mutate(Vha_Tot = Vha + cumsum(Vha_dead) + cumsum(Vha_thinned)) %>%
       ungroup() %>%
-      mutate(Vha_mean = Vha/Nha,
-             Vha_Tot = Vha + Vha_dead)
+      mutate(Vha_mean = Vha/Nha)
 
    parameters = vroom(file = file.path(filepath,"parameter_scenarii.csv"),
                       col_select = base::c("parameters_id","plotDimXM","horStemSpacingM",
