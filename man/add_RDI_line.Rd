@@ -24,6 +24,6 @@ ggplot objetc correpsonding to an RDI line
 add_RDI_line
 }
 \examples{
-\dontrun{add_RDI_line(RDI = 0.15)}
+\dontrun{add_RDI_line(RDI = 0.15, linetype = "dashed", color = "red")}
 
 }
