@@ -74,6 +74,14 @@ add_growth_zone <- function(stand_data,
    all_three_growth_data = list(max = max_growth,
                                 before = reduction_growth_before_max,
                                 after = reduction_growth_after_max)
+
+   # ---- Takes into account the case where there is only one simulation ----
+   if(length(unique(stand_data$density)) == 1){
+      return(map(.x = all_three_growth_data,
+                 .f = ~ geom_point(data = .x,
+                                   aes(x = Cg, y = Nha))))
+   }
+
    # ---- regression for each set of data ----
    zone_boundary_models = imap_dfr(.x = all_three_growth_data,
                             .f = ~ loess(log(Nha) ~ log(Cg), data = .x) %>%
@@ -116,3 +124,6 @@ add_growth_zone <- function(stand_data,
    }
    return(res)
 }
+
+
+
