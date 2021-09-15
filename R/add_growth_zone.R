@@ -41,7 +41,7 @@ add_growth_zone <- function(stand_data,
    # calcul des accroissements ####
    growth_data = stand_data %>%
       calculate_growth(!!variable,!!growth_type) %>%
-      na.omit() %>%
+      filter(!is.na(get(var_name))) %>%
       mutate(id = paste(parameters_id,repetitions,sep = "."), .before = "parameters_id")
 
    # Trouver les accroissements max ####
@@ -124,6 +124,7 @@ add_growth_zone <- function(stand_data,
    }
    return(res)
 }
+
 
 
 
