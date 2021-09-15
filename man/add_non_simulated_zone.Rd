@@ -6,13 +6,19 @@
 \usage{
 add_non_simulated_zone(
   stand_data,
-  coeff_traj = c(a = 13.532, b = -1.461, a0 = 14.21, b0 = -1.79)
+  coeff_traj = c(a = 13.532, b = -1.461, a0 = 14.21, b0 = -1.79),
+  grab_force = 2,
+  show_point = FALSE
 )
 }
 \arguments{
 \item{stand_data}{data.frame from the use of "import_stand_data" function}
 
 \item{coeff_traj}{coefficient a, b, a0, and b0 of the mortality trajectory (cf : Ningre et al "Trajectoires d auto-eclaircie du Douglas en France)}
+
+\item{grab_force}{force apply to connect point together. Defaults to 2}
+
+\item{show_point}{if TRUE point used to find isolines are shown}
 }
 \value{
 A ggplot object corresponding to the zone of non-simulated data

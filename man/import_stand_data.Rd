@@ -4,13 +4,11 @@
 \alias{import_stand_data}
 \title{import_stand_data}
 \usage{
-import_stand_data(filepath, add_ecl_data = FALSE)
+import_stand_data(filepath)
 }
 \arguments{
 \item{filepath}{filepath of the output folder from SimCop. You need at least "stand_data.csv"
 and "parameter_scenarii.csv"}
-
-\item{add_ecl_data}{if TRUE add thinning data from "forestry_scenario.csv" to the dataset}
 }
 \value{
 data.frame of stand informations

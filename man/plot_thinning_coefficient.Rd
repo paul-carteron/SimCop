@@ -7,7 +7,7 @@
 plot_thinning_coefficient(stand_data, remove_theme = FALSE)
 }
 \arguments{
-\item{stand_data}{data.frame from the use of "import_stand_data" function AND add_ecl_data set to TRUE}
+\item{stand_data}{data.frame from the use of "import_stand_data"}
 
 \item{remove_theme}{If TRUE, already created theme for the graph is remove}
 }
