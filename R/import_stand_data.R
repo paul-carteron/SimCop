@@ -5,7 +5,6 @@
 #'
 #' @param filepath filepath of the output folder from SimCop. You need at least "stand_data.csv"
 #' and "parameter_scenarii.csv"
-#' @param add_ecl_data if TRUE add thinning data from "forestry_scenario.csv" to the dataset
 #'
 #' @return data.frame of stand informations
 #' @export
@@ -13,7 +12,7 @@
 #' @importFrom vroom vroom
 #' @importFrom dplyr group_by mutate ungroup left_join rename filter bind_cols
 #'
-import_stand_data = function(filepath, add_ecl_data = FALSE){
+import_stand_data = function(filepath){
 
    Nha <- Vha <- Vha_dead <- douglas.hDom50 <- horStemSpacingM <- parameters_id <- repetitions <- NULL
    fertility <- density <- stand_age <- Vha_thinned <- name <- plotDimXM <- NULL
@@ -40,8 +39,8 @@ import_stand_data = function(filepath, add_ecl_data = FALSE){
       stand_data = bind_cols(rawdata,parameters)
    }
 
-   # ---- import of thinning data if is add_ecl_data TRUE ----
-   if (add_ecl_data){
+   # ---- import of thinning data if ecl data exist----
+   if (!is.na(readLines(file.path(filepath,"forestry_scenario.csv"))[2])){
       ecl = vroom(file = file.path(filepath,"forestry_scenario.csv"),
                   col_select = c("thin_parameters_id","name","criteria_trigger","criteria_value_type",
                                  "criteria_value", "nb_trees_ha", "size_class_weights", "distance_factors",

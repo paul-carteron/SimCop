@@ -16,7 +16,7 @@ plot_thinning_coefficient = function(stand_data, remove_theme = FALSE){
    # ---- Securite ----
    `%notin%` = Negate(`%in%`)
 
-   if("thin_parameters_id" %notin% names(stand_data)){
+   if("ecl_name" %notin% names(stand_data)){
       stop("stand_data should be imported from \"import_stand_data\" function with add_ecl_data set to TRUE")
    }
 
