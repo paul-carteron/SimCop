@@ -8,7 +8,7 @@
 #'
 #' @importFrom dplyr filter bind_rows group_by mutate select slice_max ungroup
 #' @importFrom ggforce geom_mark_hull
-#' @importFrom ggplot2 aes last_plot
+#' @importFrom ggplot2 aes last_plot geom_line
 #' @importFrom tidyr pivot_longer
 #'
 add_non_simulated_zone = function(stand_data,
@@ -36,13 +36,24 @@ add_non_simulated_zone = function(stand_data,
       bind_rows(data.frame(Cg = max_x, name = "max") %>%
                    mutate(value = calculate_traj(cg_range = max_x,
                                                  density_init = min_density)))
-   res = list(geom_mark_hull(data = res,
-                             aes(x = Cg, y = value),
-                             concavity = 3,
-                             expand = 0,
-                             radius = 0,
-                             alpha = 0.6,
-                             color = NA,
-                             fill = "grey"))
+
+   if (length(unique(stand_data$density)) == 1){
+      res = list(geom_line(data = res,
+                           aes(x = Cg, y = value),
+                           alpha = 0.6,
+                           color = "grey",
+                           size = 4))
+   }else{
+      res = list(geom_mark_hull(data = res,
+                                aes(x = Cg, y = value),
+                                concavity = 3,
+                                expand = 0,
+                                radius = 0,
+                                alpha = 0.6,
+                                color = NA,
+                                fill = "grey"))
+   }
+
    return(res)
 }
+
