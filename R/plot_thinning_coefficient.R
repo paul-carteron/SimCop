@@ -1,6 +1,6 @@
 #' plot_thinning_coefficient
 #'
-#' @param stand_data data.frame from the use of "import_stand_data" function AND add_ecl_data set to TRUE
+#' @param stand_data data.frame from the use of "import_stand_data"
 #' @param remove_theme If TRUE, already created theme for the graph is remove
 #'
 #' @return ggplot object representing variation of K parameters
@@ -17,7 +17,7 @@ plot_thinning_coefficient = function(stand_data, remove_theme = FALSE){
    `%notin%` = Negate(`%in%`)
 
    if("ecl_name" %notin% names(stand_data)){
-      stop("stand_data should be imported from \"import_stand_data\" function with add_ecl_data set to TRUE")
+      stop("The imported simulation(s) do not contain any thinnings")
    }
 
    stand_data = stand_data %>%
