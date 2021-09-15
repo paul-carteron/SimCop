@@ -7,7 +7,8 @@
 import_stand_data(filepath, add_ecl_data = FALSE)
 }
 \arguments{
-\item{filepath}{filepath of the output folder from SimCop. You need at least "stand_data.csv" and "parameter_scenarii.csv"}
+\item{filepath}{filepath of the output folder from SimCop. You need at least "stand_data.csv"
+and "parameter_scenarii.csv"}
 
 \item{add_ecl_data}{if TRUE add thinning data from "forestry_scenario.csv" to the dataset}
 }
@@ -15,5 +16,6 @@ import_stand_data(filepath, add_ecl_data = FALSE)
 data.frame of stand informations
 }
 \description{
-import_stand_data
+Function to import and format raw data from SimCop. The function takes into account
+the single simulation or the simulations from the script mode
 }
