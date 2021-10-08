@@ -11,7 +11,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/paul-carteron/SimCop
 BugReports: https://github.com/paul-carteron/SimCop/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Imports: 
     broom,
     dplyr,
@@ -27,5 +27,6 @@ Depends:
     R (>= 2.10)
 Suggests: 
     rmarkdown,
-    knitr
+    knitr,
+    qpdf
 VignetteBuilder: knitr
