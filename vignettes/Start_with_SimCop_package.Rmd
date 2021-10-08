@@ -1,0 +1,254 @@
+---
+title: "Start with SimCop package"
+author: "CARTERON Paul"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Start with SimCop package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = 'center',
+  fig.dim = c(5.5,5.5),
+  message=FALSE,
+  warning=FALSE
+)
+```
+
+
+This vignette explains how the different functions of this package can be used to analyze SimCop outputs. This package has been created primarily for the study of DGD, but it can be used for other types of analysis such as thinning
+
+## Output from SimCop
+
+The classic SimCop output contains the following files :
+
+*   branch_biomass_data.csv
+*   crownmap_data.csv
+*   forenerchips_input.csv
+*   **forestry_scenario.csv**
+*   generated_inventory.csv
+*   **generated_scenario.csv**
+*   generated_thinnings.csv
+*   stand_biomass_data.csv
+*   **stand_data.csv**
+*   stem_profiles_data.csv
+*   tree_biomass_data.csv
+*   trees_unique_data.csv
+*   vigor_distribution_data.csv
+
+Functions of `SimCop` only relies on  :
+
+*   **stand_data.csv** : variables characterizing the forest stand
+*   **generated_scenario.csv** : parameters used to initialize the simulation(s)
+*   **forestry_scenario.csv** : parameters characterizing thinnings
+
+When using SimCop, you can produce two type of data :
+
+- with capsis interface you can save one simulation at a time
+- with script mode, you can generate multiple simulation stored in the same file. In this case,
+**generated_scenario.csv** is replace by **parameter_scenarii.csv**.
+
+All functions of the package are designed to take both types of data as input
+
+## Installation
+
+Run `devtools::install_github("paul-carteron/SimCop")` to install development version from GitHub.
+
+## Import data
+
+To import data, use the `import_stand_data` function with the filepath of the folder containing all ".csv" file describe above. This function will also format the dataset.
+Already import dataset are available in the package for example (see `?stand_data_example` or `? stand_data_ecl_example`).
+
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+stand_data = import_stand_data(filepath = "Your filepath")
+```
+
+
+## `SimCop`, an additive function package
+
+Function from `SimCop` are design to be used like `ggplot2` package. To add new object to the graph you need to use `+` and if you read well, you understood that you need a starting graph; To get it, you have to used `plot_traj` function.
+
+### Beginning plot
+
+```{r echo=TRUE}
+library(SimCop)
+plot_traj()
+```
+
+This produces a graph representing the mortality trajectory(s) of the stand on log-log scale. These are based on the work of Ningre et al. "Trajectories of self-thinning of Douglas-fir in France". The trajectories are initialized by the `density_init` and `coeff_traj` arguments.
+Other arguments are used to change aesthetic of graph (scale, theme, aes).
+
+```{r}
+coeff =  c(a = 13.532, b = -1.461, a0 = 14.21, b0 = -1.79) #/!\ it must be a named vector
+new_scale = c(xmin = 25, xmax = 700, ymin = 10, ymax = 1500) #/!\ it must be a named vector
+
+plot_traj(density_init = c(100,500, 1000),
+          coeff_traj = coeff,
+          scale = new_scale,
+          linetype = "dotted", 
+          color = "mediumvioletred",
+          size = 1)
+```
+
+### RDI lines
+
+The first object you wanna plot in stand density management diagram is RDI line. Relative Density Index compare the number of stems to the maximum number of stems:
+
+$$ RDI = \frac{Nobserved}{Nmax} $$
+The RDI max corresponds to the size-density line such that RDI = 1. The RDI is between 0 and 1
+
+```{r}
+coeff =  c(a = 13.532, b = -1.461, a0 = 14.21, b0 = -1.79) #/!\ it must be a named vector
+
+SDMD = plot_traj()+
+  add_RDI_line(RDI = 1,
+               coeff_traj = coeff,
+               color = "firebrick")+
+  add_RDI_line(RDI = 0.55,
+               coeff_traj = coeff,
+               color = "steelblue",
+               linetype  = "dashed")+
+  add_RDI_line(RDI = 0.15,
+               coeff_traj = coeff,
+               color = "purple",
+               linetype  = "dashed")
+plot(SDMD)
+```
+### Diameter zone
+
+In forest management, it is common to determine a diameter of exploitability. The `add_diameter_zone` function allows to highlight several zones defined by the diameter. 
+
+```{r}
+
+SDMD + 
+  add_diameter_zone(20,50,
+                    fill = "orange",
+                    alpha = 0.2)
+
+```
+
+Following recommendation of the National Development and Management Directive for Douglas :
+
+*   The objective is the production of large quality wood with a diameter of 55-65 cm
+*   For stands of exceptional quality, of exceptional quality, the exploitable diameter can be increased to 70-75 cm
+*   Stands of poor quality quality or on poor or inadequate sites should be renewed at a diameter of 50-55 cm
+
+```{r}
+library(purrr) #allow to do optimize loop
+
+SDMD + 
+  purrr::pmap(.l = list(min = c(50,55,70),
+                 max = c(55,65,75),
+                 fill_color = c("red","orange","green")),
+              .f = ~ add_diameter_zone(..1, ..2, fill = ..3,
+                              alpha = 0.2))
+
+```
+
+### Non-simulated data
+
+For now, `plot_traj`, `add_RDI_line` and `add_diameter_zone` only rely on the coefficient of the trajectory to work. The following functions will need simulated data, we will use the example `stand_data_example` dataset (more information with `?stand_data_example`)
+
+The `add_non_simulated_zone` highlights areas where there is no simulated data. Often, a simulation stops at 70 years which explains the existence of these areas.
+
+```{r}
+data("stand_data_example")
+coeff =  c(a = 13.532, b = -1.461, a0 = 14.21, b0 = -1.79) #/!\ it must be a named vector
+
+SDMD = plot_traj(linetype = "dotted")+
+  add_RDI_line(RDI = 1,
+               coeff_traj = coeff)+
+  add_non_simulated_zone(stand_data = stand_data_example,
+                         coeff_traj = coeff)
+
+plot(SDMD)
+```
+
+### Isolines
+
+Isolines are lines of equal value. SDMDs always represent dominant height isolines because they add a temporal dimension to the diagram if used in combination with fertility curves. These lines are calculted from the `stand_data_example`. Every variables from the dataset can be used to create isolignes which mean `variable` argument can be :
+
+*   "Nha","Gha","Vha","Hdom", "Hg", "Cdom", "Cg", "Vha_dead", "Vha_mean", "Vha_Tot","Dg", "Ddom", "Nha_thinned", "Vha_thinned", "Out_of_cover_crown_cover_ha"
+
+```{r}
+SDMD +
+  add_isolines(stand_data = stand_data_example,
+               variable = "Hdom",
+               iso_values = c(15,25,35),
+               label_position = "bottom",
+               color = "red",
+               show_point = TRUE) # Point used for the regression
+```
+```{r}
+SDMD +
+  add_isolines(stand_data = stand_data_example,
+               variable = "Vha",
+               iso_values = c(100,300,500),
+               label_position = "bottom",
+               color = "steelblue",
+               show_point = TRUE)
+```
+
+### Zone of growth
+
+One of the primary objectives in silviculture is to maximize increment to reduce the rotation cycle of a stand. Often, we want to maximize the increment in volume. The function `add_growth_zone` automatically detects the maximum, annual or average, growth of a chosen variable from the data in stand_data_example (see `?calculate growth`). Then, the zone is drawn from the `reduction_rate` argument which delimits the width of the zone. For example, `reduction_rate = 0.05` will delimit a zone where the growth is never less than 5% of the maximum.
+
+```{r}
+coeff =  c(a = 13.532, b = -1.461, a0 = 14.21, b0 = -1.79) #/!\ it must be a named vector
+data("stand_data_example")
+
+plot_traj(linetype = "dotted")+
+  add_RDI_line(RDI = 1)+
+  add_isolines(stand_data_example,
+               variable = Hdom,
+               iso_value = c(15,20,35),
+               label_position = "bottom",
+               color = "firebrick")+
+  add_growth_zone(stand_data_example,
+                  variable = Vha,
+                  growth_type = "annual",
+                  reduction_rate = 0.02)
+```
+
+As we can see, the zone in purple is not completely filled. You can use `grab_force` argument to fix it.This reduces or increases the force of attraction between the points; use `show_point = TRUE` to see them
+
+```{r}
+plot_traj(linetype = "dotted")+
+  add_RDI_line(RDI = 1)+
+  add_isolines(stand_data_example,
+               variable = Hdom,
+               iso_value = c(15,20,35),
+               label_position = "bottom",
+               color = "firebrick")+
+  add_growth_zone(stand_data_example,
+                  variable = Vha,
+                  growth_type = "annual",
+                  reduction_rate = 0.02,
+                  show_point = TRUE,
+                  grab_force = 3)
+```
+
+Another example :
+
+
+```{r}
+plot_traj(linetype = "dotted")+
+  add_RDI_line(RDI = 1)+
+  add_isolines(stand_data_example,
+               variable = Hdom,
+               iso_value = c(15,20,35),
+               label_position = "bottom",
+               color = "firebrick")+
+  add_growth_zone(stand_data_example,
+                  variable = Cdom,
+                  growth_type = average,
+                  reduction_rate = 0.02,
+                  grab_force = 4,
+                  zone_color = "midnightblue")
+```
